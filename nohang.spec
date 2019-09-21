@@ -4,7 +4,7 @@
 
 Name:           nohang
 Version:        0.1
-Release:        14.%{date}git%{shortcommit}%{?dist}
+Release:        15.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -12,7 +12,7 @@ URL:            https://github.com/hakavlad/nohang
 Source0:        %{url}/archive/%{commit}/%{name}-%{version}.%{date}git%{shortcommit}.tar.gz
 BuildArch:      noarch
 
-%if 0%{?el7}
+%if 0%{?rhel} >= 7
 BuildRequires:  systemd
 %else
 BuildRequires:  systemd-rpm-macros
@@ -84,12 +84,14 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}
 
-
 %files desktop
 %{_sysconfdir}/%{name}/%{name}-desktop.conf
 
 
 %changelog
+* Sat Sep 21 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-15.20190919git286ed84
+- Fix BR: systemd required for EPEL8
+
 * Thu Sep 19 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-14.20190919git286ed84
 - Update to latest git snapshot
 
