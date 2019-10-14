@@ -1,10 +1,10 @@
-%global commit      286ed840e54176602638e836c079572fc9c481ba
+%global commit      2a3209ca72616a6a8f59711ff7fde7a6662ff3c7
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date        20190919
+%global date        20191005
 
 Name:           nohang
 Version:        0.1
-Release:        14.%{date}git%{shortcommit}%{?dist}
+Release:        15.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -34,9 +34,9 @@ To enable and start:
 
 
 %package        desktop
+Summary:        Desktop version of %{name}
 BuildArch:      noarch
 
-Summary:        Desktop version of %{name}
 Requires:       %{name} = %{version}-%{release}
 Requires:       libnotify
 
@@ -68,6 +68,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %postun
 %systemd_postun_with_restart %{name}.service
 
+%post desktop
+install -p -m 0644 %{_sysconfdir}/%{name}/%{name}-desktop.conf %{_sysconfdir}/%{name}/%{name}.conf
+
 
 %files
 %license LICENSE
@@ -84,12 +87,14 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}
 
-
 %files desktop
 %{_sysconfdir}/%{name}/%{name}-desktop.conf
 
 
 %changelog
+* Mon Oct 14 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-15.20191005git2a3209c
+- Update to latest git snapshot
+
 * Thu Sep 19 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-14.20190919git286ed84
 - Update to latest git snapshot
 
