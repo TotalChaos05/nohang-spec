@@ -1,10 +1,10 @@
-%global commit      2a3209ca72616a6a8f59711ff7fde7a6662ff3c7
+%global commit      aef8af62ed92d465bc70e9e916a6d6dbfac26ce7
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date        20191005
+%global date        20191117
 
 Name:           nohang
 Version:        0.1
-Release:        15.%{date}git%{shortcommit}%{?dist}
+Release:        16.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -92,6 +92,9 @@ install -p -m 0644 %{_sysconfdir}/%{name}/%{name}-desktop.conf %{_sysconfdir}/%{
 
 
 %changelog
+* Sun Nov 17 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-16.20191117gitaef8af6
+- Update to latest git snapshot
+
 * Mon Oct 14 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-15.20191005git2a3209c
 - Update to latest git snapshot
 
