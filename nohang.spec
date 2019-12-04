@@ -1,10 +1,10 @@
-%global commit      aef8af62ed92d465bc70e9e916a6d6dbfac26ce7
+%global commit      6389a06c26e5a5a56ca36f0d504aa9f997325c13
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date        20191117
+%global date        20191203
 
 Name:           nohang
 Version:        0.1
-Release:        16.%{date}git%{shortcommit}%{?dist}
+Release:        17.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -45,7 +45,7 @@ Desktop version of %{name}.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{commit}
+%autosetup -n %{name}-%{commit} -p1
 
 
 %build
@@ -68,8 +68,15 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %postun
 %systemd_postun_with_restart %{name}.service
 
+### Desktop
 %post desktop
-install -p -m 0644 %{_sysconfdir}/%{name}/%{name}-desktop.conf %{_sysconfdir}/%{name}/%{name}.conf
+%systemd_post %{name}-desktop.service
+
+%preun desktop
+%systemd_preun %{name}-desktop.service
+
+%postun desktop
+%systemd_postun_with_restart %{name}-desktop.service
 
 
 %files
@@ -77,26 +84,34 @@ install -p -m 0644 %{_sysconfdir}/%{name}/%{name}-desktop.conf %{_sysconfdir}/%{
 %doc README.md CHANGELOG.md
 %{_bindir}/%{name}
 %{_bindir}/oom-sort
-%{_bindir}/psi-monitor
 %{_bindir}/psi-top
-%{_mandir}/man1/*.*
-%{_sysconfdir}/logrotate.d/%{name}
-%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
+%{_bindir}/psi2log
+%{_mandir}/man1/*
 %{_sysconfdir}/%{name}/%{name}.conf.default
 %{_sysconfdir}/%{name}/version
+%{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
-%dir %{_sysconfdir}/%{name}
+%dir %{_sysconfdir}/%{name}/
+%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 
 %files desktop
-%{_sysconfdir}/%{name}/%{name}-desktop.conf
+%{_sysconfdir}/%{name}/%{name}-desktop.conf.default
+%{_unitdir}/%{name}-desktop.service
+%config(noreplace) %{_sysconfdir}/%{name}/%{name}-desktop.conf
 
 
 %changelog
+* Wed Dec 04 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-17.20191203git6389a06
+- Update to latest git snapshot
+
 * Sun Nov 17 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-16.20191117gitaef8af6
 - Update to latest git snapshot
 
 * Mon Oct 14 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-15.20191005git2a3209c
 - Update to latest git snapshot
+
+* Sat Sep 21 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-15.20190919git286ed84
+- Fix BR: systemd required for EPEL8
 
 * Thu Sep 19 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-14.20190919git286ed84
 - Update to latest git snapshot
@@ -113,4 +128,3 @@ install -p -m 0644 %{_sysconfdir}/%{name}/%{name}-desktop.conf %{_sysconfdir}/%{
 
 * Sat Aug 31 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-5.20190831gitf3baa58
 - Initial package
-
