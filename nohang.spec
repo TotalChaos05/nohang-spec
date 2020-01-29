@@ -4,7 +4,7 @@
 
 Name:           nohang
 Version:        0.1
-Release:        17.%{date}git%{shortcommit}%{?dist}
+Release:        18.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -101,6 +101,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 
 
 %changelog
+* Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.1-18.20191203git6389a06
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Wed Dec 04 2019 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-17.20191203git6389a06
 - Update to latest git snapshot
 
