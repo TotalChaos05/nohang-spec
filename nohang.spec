@@ -13,7 +13,7 @@ Source0:        %{url}/archive/%{commit}/%{name}-%{version}.%{date}git%{shortcom
 BuildArch:      noarch
 
 BuildRequires:  gettext
-%if 0%{?el7}
+%if 0%{?rhel} >= 7
 BuildRequires:  systemd
 %else
 BuildRequires:  systemd-rpm-macros
