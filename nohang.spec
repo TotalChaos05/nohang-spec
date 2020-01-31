@@ -1,10 +1,10 @@
-%global commit      6389a06c26e5a5a56ca36f0d504aa9f997325c13
+%global commit      6fb032435afa8bd58c6351ff2ec1bfb32022bbb9
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date        20191203
+%global date        20200131
 
 Name:           nohang
 Version:        0.1
-Release:        18.%{date}git%{shortcommit}%{?dist}
+Release:        19.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -12,6 +12,7 @@ URL:            https://github.com/hakavlad/nohang
 Source0:        %{url}/archive/%{commit}/%{name}-%{version}.%{date}git%{shortcommit}.tar.gz
 BuildArch:      noarch
 
+BuildRequires:  gettext
 %if 0%{?el7}
 BuildRequires:  systemd
 %else
@@ -25,8 +26,8 @@ Recommends:     %{name}-desktop
 
 %description
 Nohang is a highly configurable daemon for Linux which is able to correctly
-prevent out of memory (OOM) and keep system responsiveness in low
-memory conditions.
+prevent out of memory (OOM) and keep system responsiveness in low memory
+conditions.
 
 To enable and start:
 
@@ -53,9 +54,13 @@ Desktop version of %{name}.
 
 
 %install
-%make_install BINDIR=%{_bindir} CONFDIR=%{_sysconfdir} SYSTEMDUNITDIR=%{_unitdir}
+%make_install                   \
+    BINDIR=%{_bindir}           \
+    CONFDIR=%{_sysconfdir}      \
+    SYSTEMDUNITDIR=%{_unitdir}
+
 # E: zero-length /etc/nohang/version
-# https://github.com/hakavlad/nohang/issues/52
+# * https://github.com/hakavlad/nohang/issues/52
 echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 
 
@@ -68,7 +73,7 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %postun
 %systemd_postun_with_restart %{name}.service
 
-### Desktop
+# Desktop
 %post desktop
 %systemd_post %{name}-desktop.service
 
@@ -101,6 +106,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 
 
 %changelog
+* Fri Jan 31 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-19.20200131git6fb0324
+- Update to latest git snapshot
+
 * Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.1-18.20191203git6389a06
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
