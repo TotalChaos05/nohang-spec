@@ -1,10 +1,10 @@
-%global commit      8cc7c63f9c9d1141538d70b1463b2839abfa3bd9
+%global commit      29287097b49909114fc568d7870aec52ee07a0a3
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date        20200221
+%global date        20200228
 
 Name:           nohang
 Version:        0.1
-Release:        22.%{date}git%{shortcommit}%{?dist}
+Release:        23.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -92,20 +92,23 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %{_bindir}/psi-top
 %{_bindir}/psi2log
 %{_mandir}/man1/*
-%{_sysconfdir}/%{name}/%{name}.conf.default
+%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
+%{_sysconfdir}/%{name}/defaults/%{name}.conf
 %{_sysconfdir}/%{name}/version
 %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}/
-%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 
 %files desktop
-%{_sysconfdir}/%{name}/%{name}-desktop.conf.default
-%{_unitdir}/%{name}-desktop.service
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}-desktop.conf
+%{_sysconfdir}/%{name}/defaults/%{name}-desktop.conf
+%{_unitdir}/%{name}-desktop.service
 
 
 %changelog
+* Fri Feb 28 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-23.20200228git2928709
+- Update to latest git snapshot
+
 * Fri Feb 21 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-22.20200221git8cc7c63
 - Update to latest git snapshot
 
