@@ -1,10 +1,10 @@
-%global commit      c70b8242d071d177a020177623386630b99d64fb
+%global commit      daca5ccf1e4632a6cdaa726e1912bc5370c780c3
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date        20200317
+%global date        20200323
 
 Name:           nohang
 Version:        0.1
-Release:        24.%{date}git%{shortcommit}%{?dist}
+Release:        25.%{date}git%{shortcommit}%{?dist}
 Summary:        Highly configurable OOM prevention daemon
 
 License:        MIT
@@ -106,6 +106,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 
 
 %changelog
+* Mon Mar 23 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-25.20200323gitdaca5cc
+- Update to latest git snapshot
+
 * Tue Mar 17 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-24.20200317gitc70b824
 - Update to latest git snapshot
 
