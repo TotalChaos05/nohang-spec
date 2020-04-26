@@ -1,11 +1,11 @@
-%global commit      18f90d7a8cedf032292a61c61f22a905710f8343
+%global commit  45b15aab88acc07a95bfc383393077f2cb480576
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date        20200403
+%global date    20200426
 
 Name:           nohang
 Version:        0.1
-Release:        26.%{date}git%{shortcommit}%{?dist}
-Summary:        Highly configurable OOM prevention daemon
+Release:        27.%{date}git%{shortcommit}%{?dist}
+Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
 URL:            https://github.com/hakavlad/nohang
@@ -18,10 +18,13 @@ BuildRequires:  systemd
 %else
 BuildRequires:  systemd-rpm-macros
 %endif
+
 Requires:       logrotate
+
 %if 0%{?fedora} || 0%{?rhel} >= 8
 Recommends:     %{name}-desktop
 %endif
+
 %{?systemd_requires}
 
 %description
@@ -95,7 +98,7 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %{_sysconfdir}/%{name}/defaults/%{name}.conf
 %{_sysconfdir}/%{name}/version
-%{_sysconfdir}/logrotate.d/%{name}
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}/
 
@@ -106,6 +109,10 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 
 
 %changelog
+* Sun Apr 26 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-27.20200426git45b15aa
+- Update to latest git snapshot
+- Update summary, sync with upstream
+
 * Fri Apr 03 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-26.20200403git18f90d7
 - Update to latest git snapshot
 
