@@ -1,10 +1,10 @@
-%global commit  45b15aab88acc07a95bfc383393077f2cb480576
+%global commit  a79439659c2dfe8a502511e3a18efd24852f0fbc
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date    20200426
+%global date    20200504
 
 Name:           nohang
 Version:        0.1
-Release:        27.%{date}git%{shortcommit}%{?dist}
+Release:        28.%{date}git%{shortcommit}%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -60,6 +60,7 @@ Desktop version of %{name}.
 %make_install                   \
     BINDIR=%{_bindir}           \
     CONFDIR=%{_sysconfdir}      \
+    MANDIR=%{_mandir}/man1      \
     SYSTEMDUNITDIR=%{_unitdir}
 
 # E: zero-length /etc/nohang/version
@@ -109,6 +110,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 
 
 %changelog
+* Mon May 04 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-28.20200504gita794396
+- Update to latest git snapshot
+
 * Sun Apr 26 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-27.20200426git45b15aa
 - Update to latest git snapshot
 - Update summary, sync with upstream
