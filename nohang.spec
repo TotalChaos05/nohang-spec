@@ -59,13 +59,14 @@ Desktop version of %{name}.
 %install
 %make_install                   \
     BINDIR=%{_bindir}           \
-    CONFDIR=%{_sysconfdir}      \
     MANDIR=%{_mandir}/man1      \
+    PREFIX=%{_prefix}           \
+    SYSCONFDIR=%{_sysconfdir}   \
     SYSTEMDUNITDIR=%{_unitdir}
 
 # E: zero-length /etc/nohang/version
 # * https://github.com/hakavlad/nohang/issues/52
-echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
+echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %post
@@ -91,21 +92,21 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 %files
 %license LICENSE
 %doc README.md CHANGELOG.md
-%{_bindir}/%{name}
+%{_sbindir}/%{name}
 %{_bindir}/oom-sort
 %{_bindir}/psi-top
 %{_bindir}/psi2log
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
-%{_sysconfdir}/%{name}/defaults/%{name}.conf
-%{_sysconfdir}/%{name}/version
+%{_datadir}/%{name}/%{name}.conf
+%{_datadir}/%{name}/version
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}/
 
 %files desktop
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}-desktop.conf
-%{_sysconfdir}/%{name}/defaults/%{name}-desktop.conf
+%{_datadir}/%{name}/%{name}-desktop.conf
 %{_unitdir}/%{name}-desktop.service
 
 
