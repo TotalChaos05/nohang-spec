@@ -1,10 +1,10 @@
-%global commit  a79439659c2dfe8a502511e3a18efd24852f0fbc
+%global commit  4cf9810755586cd25796f90014cb4105c515a6d5
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date    20200504
+%global date    20200506
 
 Name:           nohang
 Version:        0.1
-Release:        28.%{date}git%{shortcommit}%{?dist}
+Release:        29.%{date}git%{shortcommit}%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -110,6 +110,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_sysconfdir}/%{name}/version
 
 
 %changelog
+* Wed May 06 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-29.20200506git4cf9810
+- Update to latest git snapshot
+
 * Mon May 04 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-28.20200504gita794396
 - Update to latest git snapshot
 
