@@ -91,7 +91,6 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 %files
 %license LICENSE
-%doc README.md CHANGELOG.md
 %{_sbindir}/%{name}
 %{_bindir}/oom-sort
 %{_bindir}/psi-top
@@ -100,6 +99,7 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/version
+%{_docdir}/%{name}/*.md
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}/
