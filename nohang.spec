@@ -1,10 +1,10 @@
-%global commit  4cf9810755586cd25796f90014cb4105c515a6d5
+%global commit  271c04dff32caa75fc4266c1b408c59818692897
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date    20200506
+%global date    20200612
 
 Name:           nohang
 Version:        0.1
-Release:        29.%{date}git%{shortcommit}%{?dist}
+Release:        30.%{date}git%{shortcommit}%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -91,7 +91,6 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 %files
 %license LICENSE
-%doc README.md CHANGELOG.md
 %{_sbindir}/%{name}
 %{_bindir}/oom-sort
 %{_bindir}/psi-top
@@ -100,6 +99,7 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/version
+%{_docdir}/%{name}/*.md
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}/
@@ -111,6 +111,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %changelog
+* Fri Jun 12 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-30.20200612git271c04d
+- Update to latest git snapshot
+
 * Wed May 06 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-29.20200506git4cf9810
 - Update to latest git snapshot
 
