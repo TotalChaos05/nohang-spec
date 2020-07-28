@@ -4,7 +4,7 @@
 
 Name:           nohang
 Version:        0.1
-Release:        30.%{date}git%{shortcommit}%{?dist}
+Release:        31.%{date}git%{shortcommit}%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -111,6 +111,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %changelog
+* Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.1-31.20200612git271c04d
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Fri Jun 12 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-30.20200612git271c04d
 - Update to latest git snapshot
 
