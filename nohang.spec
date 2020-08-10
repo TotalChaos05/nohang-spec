@@ -1,10 +1,10 @@
-%global commit  271c04dff32caa75fc4266c1b408c59818692897
+%global commit  2500c6cef7d1a10cddb47b8976335242af77c7ea
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date    20200612
+%global date    20200809
 
 Name:           nohang
 Version:        0.1
-Release:        30.%{date}git%{shortcommit}%{?dist}
+Release:        32.%{date}git%{shortcommit}%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -111,6 +111,12 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %changelog
+* Mon Aug 10 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-32.20200809git2500c6c
+- Update to latest git snapshot
+
+* Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.1-31.20200612git271c04d
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Fri Jun 12 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-30.20200612git271c04d
 - Update to latest git snapshot
 
