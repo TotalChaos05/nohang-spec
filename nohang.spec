@@ -1,28 +1,28 @@
-%global commit  2500c6cef7d1a10cddb47b8976335242af77c7ea
+%global commit faf49b0023b6d5ecd6313632ce0bebe9bfd1830b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date    20200809
+%global date 20200919
 
-Name:           nohang
-Version:        0.1
-Release:        32.%{date}git%{shortcommit}%{?dist}
-Summary:        Sophisticated low memory handler for Linux
+Name: nohang
+Version: 0.1
+Release: 33.%{date}git%{shortcommit}%{?dist}
+Summary: Sophisticated low memory handler for Linux
+BuildArch: noarch
 
-License:        MIT
-URL:            https://github.com/hakavlad/nohang
-Source0:        %{url}/archive/%{commit}/%{name}-%{version}.%{date}git%{shortcommit}.tar.gz
-BuildArch:      noarch
+License: MIT
+URL: https://github.com/hakavlad/nohang
+Source0: %{url}/archive/%{commit}/%{name}-%{version}.%{date}git%{shortcommit}.tar.gz
 
-BuildRequires:  gettext
+BuildRequires: gettext
 %if 0%{?rhel} >= 7
-BuildRequires:  systemd
+BuildRequires: systemd
 %else
-BuildRequires:  systemd-rpm-macros
+BuildRequires: systemd-rpm-macros
 %endif
 
-Requires:       logrotate
+Requires: logrotate
 
 %if 0%{?fedora} || 0%{?rhel} >= 8
-Recommends:     %{name}-desktop
+Recommends: %{name}-desktop
 %endif
 
 %{?systemd_requires}
@@ -37,14 +37,14 @@ To enable and start:
   systemctl enable --now %{name}
 
 
-%package        desktop
-Summary:        Desktop version of %{name}
-BuildArch:      noarch
+%package desktop
+Summary: Desktop version of %{name}
+BuildArch: noarch
 
-Requires:       %{name} = %{version}-%{release}
-Requires:       libnotify
+Requires: %{name} = %{version}-%{release}
+Requires: libnotify
 
-%description    desktop
+%description desktop
 Desktop version of %{name}.
 
 
@@ -57,11 +57,11 @@ Desktop version of %{name}.
 
 
 %install
-%make_install                   \
-    BINDIR=%{_bindir}           \
-    MANDIR=%{_mandir}/man1      \
-    PREFIX=%{_prefix}           \
-    SYSCONFDIR=%{_sysconfdir}   \
+%make_install \
+    BINDIR=%{_bindir} \
+    MANDIR=%{_mandir}/man1 \
+    PREFIX=%{_prefix} \
+    SYSCONFDIR=%{_sysconfdir} \
     SYSTEMDUNITDIR=%{_unitdir}
 
 # E: zero-length /etc/nohang/version
@@ -102,6 +102,7 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 %{_docdir}/%{name}/*.md
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %{_unitdir}/%{name}.service
+%dir %{_datadir}/%{name}/
 %dir %{_sysconfdir}/%{name}/
 
 %files desktop
@@ -111,6 +112,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %changelog
+* Sun Sep 20 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-33.20200919gitfaf49b0
+- Update to latest git snapshot
+
 * Mon Aug 10 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-32.20200809git2500c6c
 - Update to latest git snapshot
 
