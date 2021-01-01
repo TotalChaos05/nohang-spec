@@ -1,16 +1,12 @@
-%global commit faf49b0023b6d5ecd6313632ce0bebe9bfd1830b
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global date 20200919
-
 Name: nohang
-Version: 0.1
-Release: 33.%{date}git%{shortcommit}%{?dist}
+Version: 0.2.0
+Release: 1%{?dist}
 Summary: Sophisticated low memory handler for Linux
 BuildArch: noarch
 
 License: MIT
 URL: https://github.com/hakavlad/nohang
-Source0: %{url}/archive/%{commit}/%{name}-%{version}.%{date}git%{shortcommit}.tar.gz
+Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires: gettext
 %if 0%{?rhel} >= 7
@@ -49,7 +45,7 @@ Desktop version of %{name}.
 
 
 %prep
-%autosetup -n %{name}-%{commit} -p1
+%autosetup -p1
 
 
 %build
@@ -59,7 +55,7 @@ Desktop version of %{name}.
 %install
 %make_install \
     BINDIR=%{_bindir} \
-    MANDIR=%{_mandir}/man1 \
+    MANDIR=%{_mandir} \
     PREFIX=%{_prefix} \
     SYSCONFDIR=%{_sysconfdir} \
     SYSTEMDUNITDIR=%{_unitdir}
@@ -95,7 +91,8 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 %{_bindir}/oom-sort
 %{_bindir}/psi-top
 %{_bindir}/psi2log
-%{_mandir}/man1/*
+%{_mandir}/man1/*.1.*
+%{_mandir}/man8/*.8.*
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/version
@@ -112,6 +109,9 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %changelog
+* Fri Jan  1 2021 Artem Polishchuk <ego.cordatus@gmail.com> - 0.2.0-1
+- build(update): 0.2.0
+
 * Sun Sep 20 2020 Artem Polishchuk <ego.cordatus@gmail.com> - 0.1-33.20200919gitfaf49b0
 - Update to latest git snapshot
 
