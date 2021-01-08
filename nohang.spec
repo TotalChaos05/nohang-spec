@@ -8,6 +8,7 @@ License: MIT
 URL: https://github.com/hakavlad/nohang
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
+BuildRequires: make
 BuildRequires: gettext
 %if 0%{?rhel} >= 7
 BuildRequires: systemd
