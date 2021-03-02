@@ -1,6 +1,6 @@
 Name: nohang
 Version: 0.2.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Sophisticated low memory handler for Linux
 BuildArch: noarch
 
@@ -110,6 +110,10 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %changelog
+* Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.2.0-3
+- Rebuilt for updated systemd-rpm-macros
+  See https://pagure.io/fesco/issue/2583.
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
