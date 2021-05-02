@@ -65,7 +65,7 @@ sed -i '
 
 
 %build
-%make_build
+# Not required
 
 
 %install
