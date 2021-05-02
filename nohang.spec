@@ -5,7 +5,7 @@
 
 Name:           nohang
 Version:        0.2.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -60,6 +60,8 @@ sed -i '
         s|-git describe.* >|echo "v%{version}-0-g%{shortcommit}" >|;
         s|chcon -t.*|true|;
         s|systemctl.*|true|;
+        s|.*README.md.*||;
+        s|.*CHANGELOG.md.*||;
     ' \
     Makefile
 
@@ -119,6 +121,9 @@ sed -i '
 
 
 %changelog
+* Sun May 02 2021 ElXreno <elxreno@gmail.com> - 0.2.0-5
+- Don't install some docs via Makefile
+
 * Sun May 02 2021 ElXreno <elxreno@gmail.com> - 0.2.0-4
 - * Format spec
   * Replace git command via echo in Makefile
