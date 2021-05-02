@@ -54,7 +54,7 @@ Desktop version of %{name}.
 
 # E: zero-length /etc/nohang/version
 # * https://github.com/hakavlad/nohang/issues/52
-sed -i 's|-git describe.* >|echo "v%{version}-0-g%{shortcommit}" >|' \
+sed -i 's|-git describe.* >|echo "v%{version}-0-g%{shortcommit}" >|; s|chcon -t.*|true|' \
     Makefile
 
 
