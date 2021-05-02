@@ -1,3 +1,6 @@
+%global commit      953b41aa9f00f57e3e815081e332d7833112f616
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 Name:           nohang
 Version:        0.2.0
 Release:        3%{?dist}
@@ -49,6 +52,11 @@ Desktop version of %{name}.
 %prep
 %autosetup -p1
 
+# E: zero-length /etc/nohang/version
+# * https://github.com/hakavlad/nohang/issues/52
+sed -i 's|-git describe.* >|echo "v%{version}-0-g%{shortcommit}" >|' \
+    Makefile
+
 
 %build
 %make_build
@@ -61,10 +69,6 @@ Desktop version of %{name}.
     PREFIX=%{_prefix} \
     SYSCONFDIR=%{_sysconfdir} \
     SYSTEMDUNITDIR=%{_unitdir}
-
-# E: zero-length /etc/nohang/version
-# * https://github.com/hakavlad/nohang/issues/52
-echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %post
