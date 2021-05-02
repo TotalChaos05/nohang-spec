@@ -1,25 +1,26 @@
-Name: nohang
-Version: 0.2.0
-Release: 3%{?dist}
-Summary: Sophisticated low memory handler for Linux
-BuildArch: noarch
+Name:           nohang
+Version:        0.2.0
+Release:        3%{?dist}
+Summary:        Sophisticated low memory handler for Linux
 
-License: MIT
-URL: https://github.com/hakavlad/nohang
-Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+License:        MIT
+URL:            https://github.com/hakavlad/nohang
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: make
-BuildRequires: gettext
+BuildArch:      noarch
+
+BuildRequires:  make
+BuildRequires:  gettext
 %if 0%{?rhel} >= 7
-BuildRequires: systemd
+BuildRequires:  systemd
 %else
-BuildRequires: systemd-rpm-macros
+BuildRequires:  systemd-rpm-macros
 %endif
 
-Requires: logrotate
+Requires:       logrotate
 
 %if 0%{?fedora} || 0%{?rhel} >= 8
-Recommends: %{name}-desktop
+Recommends:     %{name}-desktop
 %endif
 
 %{?systemd_requires}
@@ -34,14 +35,14 @@ To enable and start:
   systemctl enable --now %{name}
 
 
-%package desktop
-Summary: Desktop version of %{name}
-BuildArch: noarch
+%package        desktop
+Summary:        Desktop version of %{name}
+BuildArch:      noarch
 
-Requires: %{name} = %{version}-%{release}
-Requires: libnotify
+Requires:       %{name} = %{version}-%{release}
+Requires:       libnotify
 
-%description desktop
+%description    desktop
 Desktop version of %{name}.
 
 
@@ -88,20 +89,18 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 %files
 %license LICENSE
-%{_sbindir}/%{name}
+%doc README.md CHANGELOG.md
 %{_bindir}/oom-sort
-%{_bindir}/psi-top
 %{_bindir}/psi2log
-%{_mandir}/man1/*.1.*
-%{_mandir}/man8/*.8.*
+%{_bindir}/psi-top
+%{_sbindir}/%{name}
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/version
-%{_docdir}/%{name}/*.md
-%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%{_mandir}/man1/*.1.*
+%{_mandir}/man8/*.8.*
 %{_unitdir}/%{name}.service
-%dir %{_datadir}/%{name}/
-%dir %{_sysconfdir}/%{name}/
 
 %files desktop
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}-desktop.conf
