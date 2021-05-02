@@ -1,24 +1,31 @@
-Name: nohang
-Version: 0.2.0
-Release: 1%{?dist}
-Summary: Sophisticated low memory handler for Linux
-BuildArch: noarch
+%global debug_package %{nil}
 
-License: MIT
-URL: https://github.com/hakavlad/nohang
-Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+%global commit      953b41aa9f00f57e3e815081e332d7833112f616
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-BuildRequires: gettext
+Name:           nohang
+Version:        0.2.0
+Release:        5%{?dist}
+Summary:        Sophisticated low memory handler for Linux
+
+License:        MIT
+URL:            https://github.com/hakavlad/nohang
+Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+
+BuildArch:      noarch
+
+BuildRequires:  make
+BuildRequires:  gettext
 %if 0%{?rhel} >= 7
-BuildRequires: systemd
+BuildRequires:  systemd
 %else
-BuildRequires: systemd-rpm-macros
+BuildRequires:  systemd-rpm-macros
 %endif
 
-Requires: logrotate
+Requires:       logrotate
 
 %if 0%{?fedora} || 0%{?rhel} >= 8
-Recommends: %{name}-desktop
+Recommends:     %{name}-desktop
 %endif
 
 %{?systemd_requires}
@@ -33,23 +40,34 @@ To enable and start:
   systemctl enable --now %{name}
 
 
-%package desktop
-Summary: Desktop version of %{name}
-BuildArch: noarch
+%package        desktop
+Summary:        Desktop version of %{name}
+BuildArch:      noarch
 
-Requires: %{name} = %{version}-%{release}
-Requires: libnotify
+Requires:       %{name} = %{version}-%{release}
+Requires:       libnotify
 
-%description desktop
+%description    desktop
 Desktop version of %{name}.
 
 
 %prep
 %autosetup -p1
 
+# E: zero-length /etc/nohang/version
+# * https://github.com/hakavlad/nohang/issues/52
+sed -i '
+        s|-git describe.* >|echo "v%{version}-0-g%{shortcommit}" >|;
+        s|chcon -t.*|true|;
+        s|systemctl.*|true|;
+        s|.*README.md.*||;
+        s|.*CHANGELOG.md.*||;
+    ' \
+    Makefile
+
 
 %build
-%make_build
+# Not required
 
 
 %install
@@ -59,10 +77,6 @@ Desktop version of %{name}.
     PREFIX=%{_prefix} \
     SYSCONFDIR=%{_sysconfdir} \
     SYSTEMDUNITDIR=%{_unitdir}
-
-# E: zero-length /etc/nohang/version
-# * https://github.com/hakavlad/nohang/issues/52
-echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %post
@@ -87,20 +101,18 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 %files
 %license LICENSE
-%{_sbindir}/%{name}
+%doc README.md CHANGELOG.md
 %{_bindir}/oom-sort
-%{_bindir}/psi-top
 %{_bindir}/psi2log
-%{_mandir}/man1/*.1.*
-%{_mandir}/man8/*.8.*
+%{_bindir}/psi-top
+%{_sbindir}/%{name}
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/%{name}.conf
 %{_datadir}/%{name}/version
-%{_docdir}/%{name}/*.md
-%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%{_mandir}/man1/*.1.*
+%{_mandir}/man8/*.8.*
 %{_unitdir}/%{name}.service
-%dir %{_datadir}/%{name}/
-%dir %{_sysconfdir}/%{name}/
 
 %files desktop
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}-desktop.conf
@@ -109,6 +121,24 @@ echo "v%{version}-%{shortcommit}" > %{buildroot}%{_datadir}/%{name}/version
 
 
 %changelog
+* Sun May 02 2021 ElXreno <elxreno@gmail.com> - 0.2.0-5
+- Don't install some docs via Makefile
+
+* Sun May 02 2021 ElXreno <elxreno@gmail.com> - 0.2.0-4
+- * Format spec
+  * Replace git command via echo in Makefile
+  * Don't exec chcon in Makefile
+  * Don't exec systemctl in Makefile
+  * Disable search of debuginfo
+  * Drop not required build macros
+
+* Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.2.0-3
+- Rebuilt for updated systemd-rpm-macros
+  See https://pagure.io/fesco/issue/2583.
+
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Fri Jan  1 2021 Artem Polishchuk <ego.cordatus@gmail.com> - 0.2.0-1
 - build(update): 0.2.0
 
