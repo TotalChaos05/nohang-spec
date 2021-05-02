@@ -5,7 +5,7 @@
 
 Name:           nohang
 Version:        0.2.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -119,6 +119,14 @@ sed -i '
 
 
 %changelog
+* Sun May 02 2021 ElXreno <elxreno@gmail.com> - 0.2.0-4
+- * Format spec
+  * Replace git command via echo in Makefile
+  * Don't exec chcon in Makefile
+  * Don't exec systemctl in Makefile
+  * Disable search of debuginfo
+  * Drop not required build macros
+
 * Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 0.2.0-3
 - Rebuilt for updated systemd-rpm-macros
   See https://pagure.io/fesco/issue/2583.
