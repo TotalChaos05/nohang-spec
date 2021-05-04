@@ -1,5 +1,3 @@
-%global debug_package %{nil}
-
 %global commit      953b41aa9f00f57e3e815081e332d7833112f616
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
