@@ -3,7 +3,7 @@
 
 Name:           nohang
 Version:        0.2.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Sophisticated low memory handler for Linux
 
 License:        MIT
@@ -119,6 +119,9 @@ sed -i '
 
 
 %changelog
+* Thu Jul 22 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.2.0-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Sun May 02 2021 ElXreno <elxreno@gmail.com> - 0.2.0-5
 - Don't install some docs via Makefile
 
