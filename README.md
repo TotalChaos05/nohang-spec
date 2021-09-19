@@ -1,3 +1,0 @@
-# nohang
-
-The nohang package
