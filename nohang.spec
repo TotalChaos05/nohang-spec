@@ -1,6 +1,6 @@
 %global debug_package %{nil}
 
-%global commit      ecf0ba7c8e986b42a8627bda1473dfca897c4bd9
+%global commit      953b41aa9f00f57e3e815081e332d7833112f616
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           nohang
